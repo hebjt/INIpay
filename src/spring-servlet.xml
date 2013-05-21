@@ -9,9 +9,7 @@
 	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<!-- 事务配置 -->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
+
 
 	<!-- 启动组建扫描，完成action里注解组件的注册 -->
 	<!-- 
@@ -33,12 +31,12 @@
 	<!-- 配置事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 
-	<bean id="myAspect" class="com.tanghsk.tangpay.aop.LogsAspect"></bean>
+	
 	<!-- 默认的注解映射的支持 ,它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter -->
 	<mvc:annotation-driven />
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="prefix" value="/pages/" />
 		<property name="suffix" value=".jsp" /><!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 -->
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 	</bean>
