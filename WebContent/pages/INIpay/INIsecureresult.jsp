@@ -29,7 +29,7 @@
    * 3. 지불 정보 설정 *
    *********************/
 
-  inipay.SetField("inipayhome", "/home/cuijingtao/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/INIpay");  // 이니페이 홈디렉터리(상점수정 필요)
+  inipay.SetField("inipayhome", "/home/cuijingtao/workspace/INIpay/WebContent/");  // 이니페이 홈디렉터리(상점수정 필요)
   inipay.SetField("type", "securepay");  // 고정 (절대 수정 불가)
   inipay.SetField("admin", session.getAttribute("admin"));  // 키패스워드(상점아이디에 따라 변경)
   //***********************************************************************************************************

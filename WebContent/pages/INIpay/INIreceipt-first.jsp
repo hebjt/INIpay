@@ -1,3 +1,9 @@
+<%@ page language = "java" contentType = "text/html;charset=euc-kr" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <html>    
 <head>
 <title>INIpay50 현금영수증 발행 데모</title>
@@ -246,7 +252,7 @@ function pay()
 	if(confirm("현금영수증을 발행하시겠습니까?"))
 	{
 		disable_click();
-		openwin = window.open("childwin.html","childwin","width=299,height=149");
+		openwin = window.open("childwin.action","childwin","width=299,height=149");
 		return true;
 	}
 	else
@@ -329,7 +335,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 ------------------------------------------------------------------------------------------------------->
 
 <body bgcolor="#FFFFFF" text="#242424" leftmargin=0 topmargin=15 marginwidth=0 marginheight=0 bottommargin=0 rightmargin=0 onload="javascript:enable_click()" onFocus="javascript:focus_control()"><center>
-<form name=ini method=post action="INIreceipt.jsp" onSubmit="return pay(this)"> 
+<form name=ini method=post action="finsh_inireceipt.action" onSubmit="return pay(this)"> 
 <table width="632" border="0" cellspacing="0" cellpadding="0">
   <tr> 
     <td height="85" background="img/cash_top.gif" style="padding:0 0 0 64">
