@@ -640,8 +640,11 @@ public class INIpayAction {
 		model.addAttribute("TEEN_Remains", inipay.GetResult("TEEN_Remains"));
 		model.addAttribute("TEEN_UserID", inipay.GetResult("TEEN_UserID"));
 		model.addAttribute("GAMG_Cnt", inipay.GetResult("GAMG_Cnt"));
-		model.addAttribute("tid", inipay.GetResult("tid"));
-		model.addAttribute("tid", inipay.GetResult("tid"));
+		model.addAttribute("GAMG_Num", inipay.GetResult("GAMG_Num"));
+		model.addAttribute("GAMG_Remains", inipay.GetResult("GAMG_Remains"));
+		model.addAttribute("GAMG_ErrMsg", inipay.GetResult("GAMG_ErrMsg"));
+		model.addAttribute("BCSH_UserID", inipay.GetResult("BCSH_UserID"));
+		
 		
 		return null;
 	}

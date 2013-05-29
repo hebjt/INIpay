@@ -701,82 +701,51 @@ table,img {
 													<td height="1" colspan="3" align="center" background="img/line.gif"></td>
 												</tr>
 												</c:if>
-												<%
-													}
 
-													/*-------------------------------------------------------------------------------------------------------
-													 *													*
-													 *  아래 부분은 결제 수단별 결과 메세지 출력 부분입니다.    						*	
-													 *													*
-													 *  10.  게임문화 상품권 결제						                			*
-													 -------------------------------------------------------------------------------------------------------*/
-													else if ("DGCL".equals(inipay.GetResult("PayMethod"))) {
-												%>
 						<c:if test="${paymethod=='DGCL'}">
 												<tr>
 													<td width="18" align="center"><img src="img/icon02.gif" width="7" height="7"></td>
 													<td width="109" height="25">사용한 카드 수</td>
-													<td width="343"><%=(inipay.GetResult("GAMG_Cnt"))%> 장</td>
+													<td width="343">${GAMG_Cnt} 장</td>
 												</tr>
+												<c:forEach items="item" begin="1" end="${GAMG_Cnt}">
+														<tr>
+															<td height="1" colspan="3" align="center" background="img/line.gif"></td>
+														</tr>
+														<tr>
+															<td width="18" align="center"><img src="img/icon02.gif" width="7" height="7"></td>
+															<td width="109" height="25">사용한 카드번호</td>
+															<td width="343"><b>${GAMG_Num}${item} </b></td>
+														</tr>
+														<c:if test="${resultCode=='00'}">
+																<tr>
+																	<td height="1" colspan="3" align="center" background="img/line.gif"></td>
+																</tr>
+																<tr>
+																	<td width="18" align="center"><img src="img/icon02.gif" width="7" height="7"></td>
+																	<td width="109" height="25">카드 잔액</td>
+																	<td width="343"><b>${GAMG_Remains}${item} 원</b></td>
+																</tr>
+														</c:if>
+														<c:if test="${resultCode!='00'}">
+															<tr>
+																<td height="1" colspan="3" align="center" background="img/line.gif"></td>
+															</tr>
+															<tr>
+																<td width="18" align="center"><img src="img/icon02.gif" width="7" height="7"></td>
+																<td width="109" height="25">에러메세지</td>
+																<td width="343"><b>${GAMG_ErrMsg}${item} </b></td>
+															</tr>
+														</c:if>
+												</c:forEach>
 
-												<%
-													/* 아래부분은 사용한 게임문화 상품권 번호와 잔액을 보여줍니다.(결제 실패시에는 잔액대신 에러메제지를 보여줍니다.) */
-														/* 최대 6장까지 사용이 가능하며, 결제에 사용된 카드만 출력됩니다. */
-														for (int i = 1; i <= Integer.parseInt(inipay.GetResult("GAMG_Cnt")); i++) {
-												%>
-												<tr>
-													<td height="1" colspan="3" align="center" background="img/line.gif"></td>
-												</tr>
-												<tr>
-													<td width="18" align="center"><img src="img/icon02.gif" width="7" height="7"></td>
-													<td width="109" height="25">사용한 카드번호</td>
-													<td width="343"><b><%=(inipay.GetResult("GAMG_Num" + i))%> </b></td>
-												</tr>
-
-												<%
-													if (inipay.GetResult("ResultCode").equals("00")) {
-												%>
-												<tr>
-													<td height="1" colspan="3" align="center" background="img/line.gif"></td>
-												</tr>
-												<tr>
-													<td width="18" align="center"><img src="img/icon02.gif" width="7" height="7"></td>
-													<td width="109" height="25">카드 잔액</td>
-													<td width="343"><b><%=(inipay.GetResult("GAMG_Remains" + i))%> 원</b></td>
-												</tr>
-												<%
-													} else {
-												%>
-
-												<tr>
-													<td height="1" colspan="3" align="center" background="img/line.gif"></td>
-												</tr>
-												<tr>
-													<td width="18" align="center"><img src="img/icon02.gif" width="7" height="7"></td>
-													<td width="109" height="25">에러메세지</td>
-													<td width="343"><b><%=(inipay.GetResult("GAMG_ErrMsg" + i))%> </b></td>
-												</tr>
-												
-				
-												<%
-													}
-														}
-													}
-
-													/*-------------------------------------------------------------------------------------------------------
-													 *
-													 *  아래 부분은 결제 수단별 결과 메세지 출력 부분입니다.
-													 *
-													 *  11.  도서문화 상품권 결제 (BCSH)
-													 -------------------------------------------------------------------------------------------------------*/
-													else if ("BCSH".equals(inipay.GetResult("PayMethod"))) {
-												%>
+											
 					</c:if>
 					<c:if test="${paymethod=='BCSH'}">
 												<tr>
 													<td width="18" align="center"><img src="img/icon02.gif" width="7" height="7"></td>
 													<td width="109" height="25">ID</td>
-													<td width="343"><%=(inipay.GetResult("BCSH_UserID"))%></td>
+													<td width="343">${BCSH_UserID}</td>
 												</tr>
 												<tr>
 													<td height="1" colspan="3" align="center" background="img/line.gif"></td>
@@ -807,17 +776,9 @@ table,img {
  *  10. 틴캐시 결제
  *  11. 게임문화 상품권 결제
  *  12. 도서문화 상품권 결제
- --------------------------------------------------------------------------------------------------------> <%
- 	if (inipay.GetResult("ResultCode").equals("00")) {
-
- 		/*--------------------------------------------------------------------------------------------------------
- 		 *													*
- 		 * 결제 성공시 이용안내 보여주기 			    						*	
- 		 *													*
- 		 *  1.  신용카드 						                			*
- 				--------------------------------------------------------------------------------------------------------*/
- 		if (inipay.GetResult("PayMethod").equals("Card")) {
- %>
+ --------------------------------------------------------------------------------------------------------> 
+ <c:if test="${resultCode=='00'}">
+ 			<c:if test="${paymethod=='Card'}">
 								<table width="510" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td height="25" style="padding: 0 0 0 9"><img src="img/icon.gif" width="10" height="11"> <strong><font
@@ -838,17 +799,10 @@ table,img {
 											</table>
 										</td>
 									</tr>
-								</table> <%
- 	}//if(Card)
-
- 		/*--------------------------------------------------------------------------------------------------------
- 		 *													*
- 		 * 결제 성공시 이용안내 보여주기 			    						*	
- 		 *													*
- 		 *  2.  ISP 						                				*
- 				--------------------------------------------------------------------------------------------------------*/
- 		else if ("VCard".equals(inipay.GetResult("PayMethod"))) { // ISP
- %>
+								</table>
+			</c:if>
+				
+ 			<c:if test="${paymethod=='VCard'}">
 								<table width="510" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td height="25" style="padding: 0 0 0 9"><img src="img/icon.gif" width="10" height="11"> <strong><font
@@ -869,17 +823,9 @@ table,img {
 											</table>
 										</td>
 									</tr>
-								</table> <%
- 	}//if(VCard)
-
- 		/*--------------------------------------------------------------------------------------------------------
- 		 *													*
- 		 * 결제 성공시 이용안내 보여주기 			    						*	
- 		 *													*
- 		 *  3. 핸드폰 						                				*
- 				--------------------------------------------------------------------------------------------------------*/
- 		else if ("HPP".equals(inipay.GetResult("PayMethod"))) {
- %>
+								</table>
+				</c:if> 
+ 				<c:if test="${paymethod=='HPP'}">
 								<table width="510" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td height="25" style="padding: 0 0 0 9"><img src="img/icon.gif" width="10" height="11"> <strong><font
@@ -900,16 +846,12 @@ table,img {
 											</table>
 										</td>
 									</tr>
-								</table> <%
- 	}//if(HPP)
- 		/*--------------------------------------------------------------------------------------------------------
- 		 *													*
- 		 * 결제 성공시 이용안내 보여주기 			    						*	
- 		 *													*
- 		 *  4. 전화 결제 (ARS1588Bill)				                				*
- 				--------------------------------------------------------------------------------------------------------*/
- 		else if ("Ars1588Bill".equals(inipay.GetResult("PayMethod"))) {
- %>
+								</table>
+				</c:if> 
+		
+		
+		
+ 				<c:if test="${paymethod=='Ars1588Bill'}">
 								<table width="510" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td height="25" style="padding: 0 0 0 9"><img src="img/icon.gif" width="10" height="11"> <strong><font
@@ -930,17 +872,12 @@ table,img {
 											</table>
 										</td>
 									</tr>
-								</table> <%
- 	}//if (Ars1588Bill)
-
- 		/*--------------------------------------------------------------------------------------------------------
- 		 *													*
- 		 * 결제 성공시 이용안내 보여주기 			    						*	
- 		 *													*
- 		 *  5. 폰빌 결제 (PhoneBill)				                				*
- 				--------------------------------------------------------------------------------------------------------*/
- 		else if ("PhoneBill".equals(inipay.GetResult("PayMethod"))) {
- %>
+								</table> 
+				</c:if>
+	
+	
+	
+ 				<c:if test="${paymethod=='PhoneBill'}">
 								<table width="510" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td height="25" style="padding: 0 0 0 9"><img src="img/icon.gif" width="10" height="11"> <strong><font
@@ -961,17 +898,11 @@ table,img {
 											</table>
 										</td>
 									</tr>
-								</table> <%
- 	}//if(PhoneBill)
-
- 		/*--------------------------------------------------------------------------------------------------------
- 		 *													*
- 		 * 결제 성공시 이용안내 보여주기 			    						*	
- 		 *													*
- 		 *  6. OK CASH BAG POINT					                				*
- 				--------------------------------------------------------------------------------------------------------*/
- 		else if ("OCBPoint".equals(inipay.GetResult("PayMethod"))) {
- %>
+								</table>				
+				</c:if>
+		
+		 
+ 				<c:if test="${paymethod=='OCBPoint'}">
 								<table width="510" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td height="25" style="padding: 0 0 0 9"><img src="img/icon.gif" width="10" height="11"> <strong><font
@@ -990,17 +921,10 @@ table,img {
 											</table>
 										</td>
 									</tr>
-								</table> <%
- 	}//if (OCBPoint)
-
- 		/*--------------------------------------------------------------------------------------------------------
- 		 *													*
- 		 * 결제 성공시 이용안내 보여주기 			    						*	
- 		 *													*
- 		 *  7. 은행계좌이체					                				*
- 				--------------------------------------------------------------------------------------------------------*/
- 		else if ("DirectBank".equals(inipay.GetResult("PayMethod"))) {
- %>
+								</table> 
+			</c:if>					
+								
+ 			<c:if test="${paymethod=='DirectBank'}">
 								<table width="510" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td height="25" style="padding: 0 0 0 9"><img src="img/icon.gif" width="10" height="11"> <strong><font
@@ -1021,17 +945,10 @@ table,img {
 											</table>
 										</td>
 									</tr>
-								</table> <%
- 	} //if(DirectBank)
-
- 		/*--------------------------------------------------------------------------------------------------------
- 		 *													*
- 		 * 결제 성공시 이용안내 보여주기 			    						*	
- 		 *													*
- 		 *  8. 무통장 입금 서비스					                			*
- 				--------------------------------------------------------------------------------------------------------*/
- 		else if ("VBank".equals(inipay.GetResult("PayMethod"))) {
- %>
+								</table> 
+			</c:if>					
+						
+  		<c:if test="${paymethod=='VBank'}">
 								<table width="510" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td height="25" style="padding: 0 0 0 9"><img src="img/icon.gif" width="10" height="11"> <strong><font
@@ -1052,17 +969,9 @@ table,img {
 											</table>
 										</td>
 									</tr>
-								</table> <%
- 	}//if(VBank)
-
- 		/*--------------------------------------------------------------------------------------------------------
- 		 *													*
- 		 * 결제 성공시 이용안내 보여주기 			    						*	
- 		 *													*
- 		 *  9. 문화상품권 결제					                				*
- 				--------------------------------------------------------------------------------------------------------*/
- 		else if ("Culture".equals(inipay.GetResult("PayMethod"))) {
- %>
+								</table> 
+			</c:if>
+ 			<c:if test="${paymethod=='Culture'}">
 								<table width="510" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td height="25" style="padding: 0 0 0 9"><img src="img/icon.gif" width="10" height="11"> <strong><font
@@ -1083,17 +992,10 @@ table,img {
 											</table>
 										</td>
 									</tr>
-								</table> <%
- 	}
-
- 		/*--------------------------------------------------------------------------------------------------------
- 		 *													*
- 		 * 결제 성공시 이용안내 보여주기 			    						*	
- 		 *													*
- 		 *  10. 틴캐시 결제					                				*
- 				--------------------------------------------------------------------------------------------------------*/
- 		else if ("TEEN".equals(inipay.GetResult("PayMethod"))) {
- %>
+								</table> 
+			</c:if>
+					
+  		<c:if test="${paymethod=='TEEN'}">
 								<table width="510" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td height="25" style="padding: 0 0 0 9"><img src="img/icon.gif" width="10" height="11"> <strong><font
@@ -1114,17 +1016,11 @@ table,img {
 											</table>
 										</td>
 									</tr>
-								</table> <%
- 	}// if(TEEN)
-
- 		/*--------------------------------------------------------------------------------------------------------
- 		 *													*
- 		 * 결제 성공시 이용안내 보여주기 			    						*	
- 		 *													*
- 		 *  11. 게임문화 상품권 결제				                				*
- 			--------------------------------------------------------------------------------------------------------*/
- 		else if ("DGCL".equals(inipay.GetResult("PayMethod"))) {
- %>
+								</table>
+				</c:if>
+								
+						
+   		<c:if test="${paymethod=='DGCL'}">
 								<table width="510" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td height="25" style="padding: 0 0 0 9"><img src="img/icon.gif" width="10" height="11"> <strong><font
@@ -1145,16 +1041,10 @@ table,img {
 											</table>
 										</td>
 									</tr>
-								</table> <%
- 	}//if(DGCL)
- 		/*--------------------------------------------------------------------------------------------------------
- 		 *
- 		 * 결제 성공시 이용안내 보여주기
- 		 *
- 		 *  12. 도서문화상품권 결제
- 				--------------------------------------------------------------------------------------------------------*/
- 		else if ("BCSH".equals(inipay.GetResult("PayMethod"))) {
- %>
+								</table>
+				</c:if>
+	
+ 				<c:if test="${paymethod=='BCSH'}">
 								<table width="510" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td height="25" style="padding: 0 0 0 9"><img src="img/icon.gif" width="10" height="11"> <strong><font
@@ -1174,11 +1064,10 @@ table,img {
 											</table>
 										</td>
 									</tr>
-								</table> <%
- 	}//if (BCSH)
- 	}//if(ResultCode.equals("00"))
- %> <!-- 이용안내 끝 -->
-
+								</table>
+			</c:if>
+	
+</c:if>
 							</td>
 						</tr>
 					</table>
