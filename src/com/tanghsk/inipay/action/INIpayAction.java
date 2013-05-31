@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ import com.inicis.inipay.INIpay50;
 
 @Controller
 public class INIpayAction {
+	
+	protected static Logger logger = Logger.getLogger(INIpayAction.class);
 	@RequestMapping(value = "ini_securestart", method = RequestMethod.GET)
 	public String INIsecurestart(HttpServletRequest request, HttpServletResponse response, Model model) throws UnsupportedEncodingException {
 		HttpSession session = request.getSession();
@@ -351,7 +354,8 @@ public class INIpayAction {
 		inipay.SetField("buyername", request.getParameter("buyername")); // 구매자 명
 		inipay.SetField("buyertel", request.getParameter("buyertel")); // 구매자 연락처(휴대폰 번호 또는 유선전화번호)
 		inipay.SetField("buyeremail", request.getParameter("buyeremail")); // 구매자 이메일 주소
-		inipay.SetField("url", "http://www.your_domain.co.kr"); // 실제 서비스되는 상점 SITE URL로 변경할것
+		//inipay.SetField("url", "http://www.your_domain.co.kr"); // 실제 서비스되는 상점 SITE URL로 변경할것http://49.5.1.250:8080/INIpay/inipay_result.action
+		inipay.SetField("url", "http://49.5.1.250:8080/INIpay/inipay_result.action");
 		inipay.SetField("cardcode", request.getParameter("cardcode")); // 카드코드 리턴
 		inipay.SetField("parentemail", request.getParameter("parentemail")); // 보호자 이메일 주소(핸드폰 , 전화결제시에 14세 미만의 고객이 결제하면  부모 이메일로 결제 내용통보 의무, 다른결제 수단 사용시에 삭제 가능)
 
@@ -622,7 +626,8 @@ public class INIpayAction {
 		model.addAttribute("OCB_PayApplNum", inipay.GetResult("OCB_PayApplNum"));
 		model.addAttribute("OCB_ApplDate", inipay.GetResult("OCB_ApplDate"));
 		model.addAttribute("OCB_PayPrice", inipay.GetResult("OCB_PayPrice"));
-	
+		model.addAttribute("VACT_RegNum", inipay.GetResult("VACT_RegNum"));
+		
 		model.addAttribute("ACCT_BankCode", inipay.GetResult("ACCT_BankCode"));
 		model.addAttribute("CSHR_ResultCode", inipay.GetResult("CSHR_ResultCode"));
 		model.addAttribute("CSHR_Type", inipay.GetResult("CSHR_Type"));
@@ -645,8 +650,10 @@ public class INIpayAction {
 		model.addAttribute("GAMG_ErrMsg", inipay.GetResult("GAMG_ErrMsg"));
 		model.addAttribute("BCSH_UserID", inipay.GetResult("BCSH_UserID"));
 		
-		
-		return null;
+		logger.info("mid 商户id"+inipay.GetResult("MID"));
+		logger.info("tid 业务处理id"+inipay.GetResult("tid"));
+		logger.info("moid 订单id 等于oid"+inipay.GetResult("MOID"));
+		return "INIpay/INIsecureresult";
 	}
 
 }

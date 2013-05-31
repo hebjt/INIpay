@@ -88,14 +88,15 @@ table,img {
 </style>
 
 <script>
-	var openwin=window.open("childwin.html","childwin","width=299,height=149");
+	var openwin=window.open("childwin.action","childwin","width=299,height=149");
 	openwin.close();
 	
 	function show_receipt(tid) // 영수증 출력
 	{
-		if(<%=inipay.GetResult("ResultCode")%> == "00")
+		
+		if("${resultCode}"=='00')
 		{
-			var receiptUrl = "https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/mCmReceipt_head.jsp?noTid=<%=inipay.GetResult("tid")%>&noMethod=1";
+			var receiptUrl = "https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/mCmReceipt_head.jsp?noTid=${tid}&noMethod=1";
 			window.open(receiptUrl,"receipt","width=430,height=700");
 		}
 		else
@@ -106,9 +107,9 @@ table,img {
 		
 	function errhelp() // 상세 에러내역 출력
 	{
-		var errhelpUrl = "http://www.inicis.com/ErrCode/Error.jsp?result_err_code=<%=inipay.GetResult("ResultErrorCode")%>&mid=<%=inipay.GetResult("MID")%>&tid=<%=inipay.GetResult("tid")%>"+
-		"&goodname=<%=inipay.GetResult("goodname")%>&price=<%=inipay.GetResult("price")%>&paymethod=<%=inipay.GetResult("PayMethod")%>&buyername=<%=inipay.GetResult("buyerName")%>"+
-		"&buyertel=<%=inipay.GetResult("buyertel")%>&buyeremail=<%=inipay.GetResult("buyeremail")%>&codegw=<%=inipay.GetResult("HPP_GWCode")%>";
+		var errhelpUrl = "http://www.inicis.com/ErrCode/Error.jsp?result_err_code=${resultErrorCode}&mid=${mid}&tid=${tid}"+
+		"&goodname=${goodname}&price=${price}&paymethod=${paymethod}&buyername=${buyername}"+
+		"&buyertel=${buyertel}&buyeremail=${buyeremail}&codegw=${HPP_GWCode}";
 		window.open(errhelpUrl, "errhelp",
 				"width=520,height=150, scrollbars=yes,resizable=yes");
 	}
@@ -505,7 +506,7 @@ table,img {
                     		<tr> 
                     		  <td width="18" align="center"><img src="img/icon02.gif" width="7" height="7"></td>
                     		  <td width="109" height="25">송금자 주민번호</td>
-                    		  <td width="343"><%=(inipay.GetResult("VACT_RegNum"))%>
+                    		  <td width="343">${VACT_RegNum}
               </td>
                     		</tr>
                     		-->

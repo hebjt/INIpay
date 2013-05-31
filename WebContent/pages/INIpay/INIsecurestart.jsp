@@ -115,7 +115,7 @@ function pay(frm)
 			if (MakePayMessage(frm))
 			{
 				disable_click();
-				openwin = window.open("childwin.html","childwin","width=299,height=149");		
+				openwin = window.open("childwin.action","childwin","width=299,height=149");		
 				return true;
 			}
 			else
@@ -177,7 +177,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 ------------------------------------------------------------------------------------------------------->
 
 <body bgcolor="#FFFFFF" text="#242424" leftmargin=0 topmargin=15 marginwidth=0 marginheight=0 bottommargin=0 rightmargin=0 onload="javascript:enable_click()" onFocus="javascript:focus_control()"><center>
-<form name=ini method=post action="INIsecureresult.jsp" onSubmit="return pay(this)"> 
+<form name=ini method=post action="inipay_result.action" onSubmit="return pay(this)"> 
 <table width="632" border="0" cellspacing="0" cellpadding="0">
   <tr> 
     <td height="85" background="img/card.gif" style="padding:0 0 0 64">
@@ -276,7 +276,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
                     <tr> 
                       <td width="18" align="center"><img src="img/icon02.gif" width="7" height="7"></td>
                       <td width="109" height="25">전 자 우 편</td>
-                      <td width="343"><input type=text name=buyeremail size=20 value="hkd@abcd.com"></td>
+                      <td width="343"><input type=text name=buyeremail size=20 value="cuijingtao@gmail.com"></td>
                     </tr>
                     <tr> 
                       <td height="1" colspan="3" align="center"  background="img/line.gif"></td>
