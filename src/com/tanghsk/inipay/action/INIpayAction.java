@@ -34,7 +34,9 @@ public class INIpayAction {
 		 * 3. 암호화 대상/값 설정 set field value *
 		 ***************************************/
 		// /home/cuijingtao/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/INIpay
-		inipay.SetField("inipayhome", "/home/cuijingtao/workspace/INIpay/WebContent/"); // 이니페이
+		String contentUrl = request.getSession().getServletContext().getRealPath("/");
+		inipay.SetField("inipayhome", contentUrl); // 이니페이
+		//inipay.SetField("inipayhome", "/home/cuijingtao/workspace/INIpay/WebContent/"); // 이니페이
 																						// 홈디렉터리(상점수정
 																						// 필요)
 		inipay.SetField("admin", "1111"); // 키패스워드(상점아이디에 따라 변경)
@@ -122,7 +124,9 @@ public class INIpayAction {
 		/*********************
 		 * 3. 취소 정보 설정 *
 		 *********************/
-		inipay.SetField("inipayhome", "/home/cuijingtao/workspace/INIpay/WebContent/"); // 이니페이
+		String contentUrl = request.getSession().getServletContext().getRealPath("/");
+		inipay.SetField("inipayhome", contentUrl); // 이니페이
+		//inipay.SetField("inipayhome", "/home/cuijingtao/workspace/INIpay/WebContent/"); // 이니페이
 																						// 홈디렉터리(상점수정
 		// 필요)
 		inipay.SetField("type", "cancel"); // 고정 (절대 수정 불가)
@@ -305,7 +309,9 @@ public class INIpayAction {
 		 * 3. 지불 정보 설정 *
 		 *********************/
 
-		inipay.SetField("inipayhome","/home/cuijingtao/workspace/INIpay/WebContent/"); // 이니페이 홈디렉터리(상점수정 필요)
+		String contentUrl = request.getSession().getServletContext().getRealPath("/");
+		inipay.SetField("inipayhome", contentUrl); // 이니페이
+		//inipay.SetField("inipayhome","/home/cuijingtao/workspace/INIpay/WebContent/"); // 이니페이 홈디렉터리(상점수정 필요)
 		inipay.SetField("type", "securepay"); // 고정 (절대 수정 불가)
 		inipay.SetField("admin", session.getAttribute("admin")); // 키패스워드(상점아이디에 따라 변경)
 		//***********************************************************************************************************
